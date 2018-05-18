@@ -38,6 +38,9 @@ function shuffle(array) {
  */
   
 var firstCard;
+var flag = false;
+var startTime = new Date();;
+var timer1 = window.setInterval(startTimer,1000);
 var openCards = document.getElementsByClassName("card open show");
 var cardArr;
 cardArr = document.getElementsByTagName("li");
@@ -45,9 +48,23 @@ for(var ct=0;ct<cardArr.length;ct++)
     {
         cardArr[ct].addEventListener("click",clickCard);
     }
+var rep = document.getElementsByClassName("fa fa-repeat");
+rep[0].addEventListener("click",newGame);
+
+function newGame()
+{
+    
+    window.location.reload();
+}
 
 function clickCard() {
-    alert(this.className);
+      
+    if(!flag)
+        {
+            
+             flag = true;
+        }
+    
    
     checkMatch(this);
 }
@@ -56,22 +73,17 @@ function checkMatch(matchCard)
 {
     
   
-    alert("there are " + openCards.length + " open cards now");
-    
+        
     switch(openCards.length % 2)
         {
         
            case 1: 
 
-                alert("Already opened card is " + firstCard.getElementsByTagName('i')[0].className);
-                alert("Card clicked is  " + matchCard.getElementsByTagName('i')[0].className);
-
-                if(firstCard.getElementsByTagName('i')[0].className == matchCard.getElementsByTagName('i')[0].className)
+               if(firstCard.getElementsByTagName('i')[0].className == matchCard.getElementsByTagName('i')[0].className)
                     {
-                        alert("The symbol in both cards is " + matchCard.getElementsByTagName('i')[0].className);
                          firstCard.className = 'card open show';
                        matchCard.className = 'card open show';
-
+                       checkEndGame();
 
                     }
                 else
@@ -84,8 +96,8 @@ function checkMatch(matchCard)
                 
                  break;
             case 0:
-                alert("inside the length 0");
-                 matchCard.className = "card open show";
+               
+                matchCard.className = "card open show";
                 firstCard = matchCard;
                 break;
         
@@ -104,4 +116,38 @@ function incrementMoves()
    if(movesctr >= 0)
         document.getElementsByClassName("moves")[0].innerHTML = movesctr + 1;
    
+   
+    if(movesctr > 4)
+       document.getElementsByClassName("fa fa-star")[0].style.display='none';
+     if(movesctr > 10)
+       document.getElementsByClassName("fa fa-star")[1].style.display='none';
+     if(movesctr > 20)
+       document.getElementsByClassName("fa fa-star")[2].style.display='none';
+         
 }
+
+
+function startTimer()
+{
+     
+    var dt = new Date();
+    document.getElementById('timer').innerHTML = Math.abs(dt.getMinutes() - startTime.getMinutes()) + ":" + Math.abs(dt.getSeconds() - startTime.getSeconds());
+    
+    
+    
+}
+
+function checkEndGame()
+{    
+  
+    if(openCards.length == 16)
+        {
+            alert("CONGATULATIONS !! You Won!!! "); 
+            window.clearInterval(timer1);
+            
+            
+        }
+         
+    
+}
+
