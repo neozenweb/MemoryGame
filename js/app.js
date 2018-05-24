@@ -46,7 +46,7 @@ function shuffle(array) {
 var firstCard;
 var flag = false;
 var startTime = new Date();
-var timer1 = window.setInterval(startTimer, 1000);
+var timer1;
 var openCards = document.getElementsByClassName("card open show");
 var cardArr;
 cardArr = document.getElementsByTagName("li");
@@ -71,13 +71,16 @@ function newGame() {
 	window.location.reload();
 }
 
+/*When a card is clicked for the first time, the timer starts.*/
 function clickCard() {
 	if (!flag) {
 		flag = true;
+         timer1 = window.setInterval(startTimer, 1000);
 	}
 	checkMatch(this);
 }
 
+/*This function checks if the two cards clicked are matching. If not the moves are incremented.*/
 function checkMatch(matchCard) {
 	switch (openCards.length % 2) {
 		case 1:
@@ -98,18 +101,24 @@ function checkMatch(matchCard) {
 	}
 }
 
+/*Function to increment moves if the two clicked cards do not match*/
+
 function incrementMoves() {
 	var movesctr = parseInt(document.getElementsByClassName("moves")[0].innerHTML);
 	if (movesctr >= 0) document.getElementsByClassName("moves")[0].innerHTML = movesctr + 1;
 	if (movesctr > 10) document.getElementsByClassName("fa fa-star")[0].style.display = 'none';
 	if (movesctr > 20) document.getElementsByClassName("fa fa-star")[1].style.display = 'none';
-	if (movesctr > 30) document.getElementsByClassName("fa fa-star")[2].style.display = 'none';
+	
 }
+
+/* This function uses the Date function and the Math methods to derive the time that the player has taken*/
 
 function startTimer() {
 	var dt = new Date();
-	document.getElementById('timer').innerHTML = Math.abs(dt.getMinutes() - startTime.getMinutes()) + ":" + Math.abs(dt.getSeconds() - startTime.getSeconds());
+	document.getElementById('timer').innerHTML = Math.abs(dt.getMinutes() - startTime.getMinutes()) + " mins:" + Math.abs(dt.getSeconds() - startTime.getSeconds()) +" secs";
 }
+
+/*This function checks if all the cards are matched. If so, a modal pops up with a message. The timer is stopped.*/
 
 function checkEndGame() {
 	var popText;
