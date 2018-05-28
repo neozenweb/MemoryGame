@@ -17,6 +17,9 @@ The memory game is a card-match game. Every time the game loads, the cards are s
 a timer starts up and keeps track of the time taken. If two consecutive clicks yield matching cards, then those cards are kept open.
 On matching all of the 8 sets of cards, a message pops up showing the time taken, rating of the player, and the moves taken to finish
 the game. A reset button is also provided to restart the game.
+Dependencies of MemoryGame app include: 
+font-awesome from the url https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css
+google fonts from the url https://fonts.googleapis.com/css?family=Coda
 
 ## Contributing
 

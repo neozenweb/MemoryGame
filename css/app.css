@@ -31,22 +31,6 @@ h1 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
 }
-/* Responsive CSS*/
-@media screen and (min-width: 600px) {
-	.container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        flex-direction: column;
-        /* Safari */
-        display: -webkit-flex;
-        -webkit-flex-wrap: wrap;
-        -webkit-flex-direction: column;
-        /* Safari 6.1+ */
-}
-
-
 
 /* CSS for the popup*/
 

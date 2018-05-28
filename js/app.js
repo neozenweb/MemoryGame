@@ -43,9 +43,9 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-var firstCard;
+var firstCard,matchCard;
 var flag = false;
-var startTime = new Date();
+var startTime;
 var timer1;
 var openCards = document.getElementsByClassName("card open show");
 var cardArr;
@@ -56,7 +56,7 @@ for (var ct = 0; ct < cardArr.length; ct++) {
 var rep = document.getElementsByClassName("fa fa-repeat");
 rep[0].addEventListener("click", newGame);
 var clbtn = document.getElementById("closebtn");
-clbtn.addEventListener("click", closePopup)
+clbtn.addEventListener("click", closePopup);
 window.addEventListener("click", focusPopup);
 
 function focusPopup() {
@@ -68,20 +68,25 @@ function closePopup() {
 }
 
 function newGame() {
-	window.location.reload();
+    window.clearInterval(timer1);
+	 flag = false;
+    window.location.reload();
 }
 
 /*When a card is clicked for the first time, the timer starts.*/
 function clickCard() {
 	if (!flag) {
 		flag = true;
-         timer1 = window.setInterval(startTimer, 1000);
+        startTime = new Date();
+         timer1 = window.setInterval(startTimer, 10);
 	}
 	checkMatch(this);
 }
 
 /*This function checks if the two cards clicked are matching. If not the moves are incremented.*/
-function checkMatch(matchCard) {
+function checkMatch(mCard) {
+    var tmp;
+    matchCard = mCard;
 	switch (openCards.length % 2) {
 		case 1:
 			if (firstCard.getElementsByTagName('i')[0].className == matchCard.getElementsByTagName('i')[0].className) {
@@ -89,9 +94,9 @@ function checkMatch(matchCard) {
 				matchCard.className = 'card open show';
 				checkEndGame();
 			} else {
-				firstCard.className = 'card';
-				matchCard.className = 'card';
-				incrementMoves();
+                matchCard.className = 'card open show';
+                tmp = setTimeout(closeCards,200);
+                
 			}
 			break;
 		case 0:
@@ -99,6 +104,14 @@ function checkMatch(matchCard) {
 			firstCard = matchCard;
 			break;
 	}
+}
+
+/*  Function to hide unmatched cards*/
+function closeCards()
+{
+        firstCard.className = 'card';
+		matchCard.className = 'card';
+        incrementMoves();
 }
 
 /*Function to increment moves if the two clicked cards do not match*/
@@ -122,6 +135,7 @@ function startTimer() {
 
 function checkEndGame() {
 	var popText;
+    window.clearInterval(timer1);
 	if (openCards.length == 16) {
 		popText = "Congratulations!! You Won the Memory Game in " + document.getElementById("timer").innerHTML + ", in " + document.getElementsByClassName("moves")[0].innerHTML + " moves. Your rating is "
 		for (var st = 0; st < 3; st++) {
@@ -131,6 +145,6 @@ function checkEndGame() {
 		document.getElementById("popupmsg").innerHTML = popText;
 		document.getElementById("popup").style.display = "block";
 		document.getElementById("modcont").style.display = "block";
-		window.clearInterval(timer1);
+		
 	}
 }
