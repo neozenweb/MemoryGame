@@ -135,8 +135,9 @@ function startTimer() {
 
 function checkEndGame() {
 	var popText;
-    window.clearInterval(timer1);
+   
 	if (openCards.length == 16) {
+         window.clearInterval(timer1);
 		popText = "Congratulations!! You Won the Memory Game in " + document.getElementById("timer").innerHTML + ", in " + document.getElementsByClassName("moves")[0].innerHTML + " moves. Your rating is "
 		for (var st = 0; st < 3; st++) {
 			if (document.getElementsByClassName('fa-star')[st].style.display != "none") popText += "<i class='fa fa-star'></i>"
